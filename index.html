@@ -126,7 +126,7 @@ body{background:var(--page-bg);color:var(--color-fg);padding-block:16px;padding-
 .sc .stp:hover .stn{color:var(--ca)}
 .sc .stp .stn{font-size:var(--cds-font-size-caption);font-weight:600}
 .sc .stp small{grid-column:2;color:var(--mu);font-size:.68rem}
-.sc td.bar{background-repeat:no-repeat;background-size:var(--w) 4px;background-position:right 0 bottom 3px}
+.sc td.cbar{background-repeat:no-repeat;background-size:var(--w) 4px;background-position:right 0 bottom 3px}
 .sc .tp{position:relative}
 .sc .tp:hover::after,.sc .tp:focus-visible::after{content:attr(data-tip);position:absolute;left:0;top:calc(100% + 6px);width:max-content;max-width:18rem;background:var(--tip);border:1px solid var(--ln);border-radius:4px;padding:.45rem .55rem;font-size:.72rem;font-weight:400;color:var(--fg);white-space:normal;text-align:left;z-index:25;box-shadow:0 6px 18px var(--sh);line-height:1.35;text-transform:none;letter-spacing:0;font-family:var(--font-sans)}
 .sc .pil.tp{cursor:help}
@@ -395,7 +395,7 @@ window.__DATA={"players":[{"nome":"Bruno Santos","origem":"Sugestão","pos":"ATA
     const L=P.filter(p=>(!S.pos||p.pos===S.pos)&&(!S.ver||p.ver===S.ver)&&(!S.ori||p.origem===S.ori)&&(!S.cob||p.cobertura===S.cob)&&(!S.livre||p.livre==='Sim')&&(!S.favOnly||S.fav.has(p.nome))&&inBrush(p)&&(!q||(p.nome+' '+p.clube).toLowerCase().includes(q)));
     const k=S.sort;L.sort((a,b)=>{const x=a[k],y=b[k];if(x==null&&y==null)return 0;if(x==null)return 1;if(y==null)return -1;return (typeof x==='number'?x-y:String(x).localeCompare(String(y),'pt-BR'))*S.dir;});
     tb.replaceChildren(...L.map(p=>{const tr=mk('tr');tr.dataset.key=p.nome;if(p.nome===S.sel)tr.className='sel';
-      const c=(t,cl)=>mk('td',t,cl);const bc=v=>{const td=mk('td',v==null?'—':nf1.format(v),'n hs bar');if(v!=null){td.style.setProperty('--w',Math.max(4,v)+'%');td.style.backgroundImage='linear-gradient('+pcol(v)+','+pcol(v)+')';}return td;};const tn=mk('td',p.nome);tn.prepend(starBtn(p.nome));if(p.origem==='Sugestão')tn.append(mk('span','sugestão','pill'));if(p.livre==='Sim')tn.append(mk('span','livre 2026','pill'));
+      const c=(t,cl)=>mk('td',t,cl);const bc=v=>{const td=mk('td',v==null?'—':nf1.format(v),'n hs cbar');if(v!=null){td.style.setProperty('--w',Math.max(4,v)+'%');td.style.backgroundImage='linear-gradient('+pcol(v)+','+pcol(v)+')';}return td;};const tn=mk('td',p.nome);tn.prepend(starBtn(p.nome));if(p.origem==='Sugestão')tn.append(mk('span','sugestão','pill'));if(p.livre==='Sim')tn.append(mk('span','livre 2026','pill'));
       tr.append(tn,c(p.posn),c(p.clube,''),c(p.idade==null?'—':String(p.idade),'n hs'),c(p.nota==null?'—':nf1.format(p.nota),'n'),verCell(p.ver),cobCell(p.cobertura),bc(p.saude),bc(p.fisico),bc(p.desemp),c(p.val_brl==null?'n/d':nf1.format(p.val_brl),'n hs'));
       tr.addEventListener('click',()=>abrir(p.nome));return tr;}));});
 
