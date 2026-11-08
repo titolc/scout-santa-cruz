@@ -75,7 +75,7 @@ body{background:var(--page-bg);color:var(--color-fg);padding-block:16px;padding-
 .sc tr.sel td{background:color-mix(in srgb,var(--acc) 26%,transparent)}
 .sc tr.sel td:first-child{box-shadow:inset 3px 0 0 var(--acc)}
 .sc .hs{}
-@media(max-width:720px){.sc .hs{display:none}}
+
 .sc .dot{display:inline-block;width:.55rem;height:.55rem;border-radius:50%;margin-right:.35rem;vertical-align:baseline}
 .sc .pill{display:inline-block;font-size:.7rem;padding:.08rem .45rem;border-radius:999px;border:1px solid var(--ln);color:var(--mu);margin-left:.3rem}
 .sc .chart{position:relative;min-height:22rem}
@@ -126,6 +126,17 @@ body{background:var(--page-bg);color:var(--color-fg);padding-block:16px;padding-
 .sc .stp:hover .stn{color:var(--ca)}
 .sc .stp .stn{font-size:var(--cds-font-size-caption);font-weight:600}
 .sc .stp small{grid-column:2;color:var(--mu);font-size:.68rem}
+.sc table.rk th:first-child,.sc table.rk td:first-child{position:sticky;left:0;z-index:1;background:var(--pn);box-shadow:inset -1px 0 0 var(--ln)}
+.sc table.rk th:first-child{z-index:3}
+@media(max-width:720px){.sc table.rk td:first-child{white-space:normal;min-width:7.5rem;max-width:9.5rem;line-height:1.25}.sc table.rk td:first-child .pill{font-size:.6rem;padding:0 .3rem;margin-left:0;margin-right:.2rem}.sc table.rk.res td:first-child{min-width:6rem;max-width:7.5rem}.sc table.rk.res th,.sc table.rk.res td{padding-left:.3rem;padding-right:.3rem}}
+.sc table.rk tr.sel td:first-child{background:linear-gradient(color-mix(in srgb,var(--acc) 26%,transparent),color-mix(in srgb,var(--acc) 26%,transparent)) var(--pn);box-shadow:inset 3px 0 0 var(--acc),inset -1px 0 0 var(--ln)}
+.sc table.rk.res tr>:nth-child(3),.sc table.rk.res tr>:nth-child(4),.sc table.rk.res tr>:nth-child(7),.sc table.rk.res tr>:nth-child(8),.sc table.rk.res tr>:nth-child(9),.sc table.rk.res tr>:nth-child(10),.sc table.rk.res tr>:nth-child(11){display:none}
+.sc table.rk.res td:nth-child(6){white-space:normal}
+.sc .rkhd{display:flex;justify-content:space-between;align-items:center;gap:.5rem;flex-wrap:wrap}
+.sc .seg{display:inline-flex;border:1px solid var(--ln);border-radius:var(--cds-radius);overflow:hidden}
+.sc .seg button{font:inherit;font-size:var(--cds-font-size-caption);color:var(--mu);background:var(--pn2);border:0;padding:.28rem .65rem;cursor:pointer}
+.sc .seg button+button{border-left:1px solid var(--ln)}
+.sc .seg button[aria-pressed=true]{background:var(--acc);color:#fff}
 .sc td.cbar{background-repeat:no-repeat;background-size:var(--w) 4px;background-position:right 0 bottom 3px}
 .sc .tp{position:relative}
 .sc .tp:hover::after,.sc .tp:focus-visible::after{content:attr(data-tip);position:absolute;left:0;top:calc(100% + 6px);width:max-content;max-width:18rem;background:var(--tip);border:1px solid var(--ln);border-radius:4px;padding:.45rem .55rem;font-size:.72rem;font-weight:400;color:var(--fg);white-space:normal;text-align:left;z-index:25;box-shadow:0 6px 18px var(--sh);line-height:1.35;text-transform:none;letter-spacing:0;font-family:var(--font-sans)}
@@ -228,10 +239,10 @@ body{background:var(--page-bg);color:var(--color-fg);padding-block:16px;padding-
 </div>
 <div class="grid2">
 <div class="card" id="ranking">
-<h2>Ranking pela nota</h2>
+<div class="rkhd"><h2>Ranking pela nota</h2><div class="seg" role="group" aria-label="Colunas do ranking"><button type="button" data-cols="res" aria-pressed="false">Resumida</button><button type="button" data-cols="full" aria-pressed="true">Completa</button></div></div>
 <p class="mu">Nota de 0 a 100 nos quatro pilares (pesos na aba Método e fontes). Clique num nome para abrir a ficha, na estrela para marcar como favorito e no título de uma coluna para ordenar.</p>
 <div class="tbox">
-<table data-source="players" data-row-key="nome">
+<table class="rk" data-source="players" data-row-key="nome">
 <thead><tr><th data-field="nome" data-s="nome">Jogador</th><th data-field="posn" data-s="posn">Pos.</th><th data-field="clube" data-s="clube">Clube</th><th data-field="idade" data-s="idade" class="n hs">Idade</th><th data-field="nota" data-s="nota" class="n" aria-sort="descending">Nota<span class="q dn" tabindex="0" data-tip="Nota de 0 a 100 somando desempenho, saúde, físico e custo. Pesos na aba Método e fontes.">?</span></th><th data-field="ver" data-s="ver">Faixa<span class="q dn" tabindex="0" data-tip="Nota alta: vale ver em vídeo (não é recomendação de contratação). Nota baixa não é descarte.">?</span></th><th data-field="cobertura" data-s="cobertura">Dados<span class="q dn" tabindex="0" data-tip="Quanto dos dados públicos existe para o jogador. Parcial ou mínima: a nota é menos confiável.">?</span></th><th data-field="saude" data-s="saude" class="n hs">Saúde<span class="q dn" tabindex="0" data-tip="Minutos jogados em 2025 e 2026 e histórico de lesões desde 2024. De 0 a 100.">?</span></th><th data-field="fisico" data-s="fisico" class="n hs">Físico<span class="q dn" tabindex="0" data-tip="Km, sprints e velocidade por jogo, duelos, idade e altura. De 0 a 100. Sem dado físico, fica no meio.">?</span></th><th data-field="desemp" data-s="desemp" class="n hs">Desemp.<span class="q dn" tabindex="0" data-tip="Média dos percentis das métricas da posição contra a mesma liga. De 0 a 100.">?</span></th><th data-field="val_brl" data-s="val_brl" class="n hs">R$ mi</th></tr></thead>
 <tbody data-draw="rows"></tbody>
 </table>
@@ -350,6 +361,11 @@ window.__DATA={"players":[{"nome":"Bruno Santos","origem":"Sugestão","pos":"ATA
   // favoritos: ficam salvos no navegador de quem marca
   const FKEY='scout-santa-favoritos';const canStore=!!window.__DATA;
   if(canStore){try{const v=JSON.parse(localStorage.getItem(FKEY)||'[]');if(Array.isArray(v))v.forEach(n=>S.fav.add(n));}catch(e){}}
+  const CKEY='scout-sc-colunas';
+  const setCols=m=>{document.querySelectorAll('table.rk').forEach(t=>{t.classList.toggle('res',m==='res');const bx=t.closest('.tbox');if(bx)bx.scrollLeft=0;});document.querySelectorAll('.seg [data-cols]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.cols===m?'true':'false'));};
+  let cols0='full';if(canStore){try{if(localStorage.getItem(CKEY)==='res')cols0='res';}catch(e){}}
+  setCols(cols0);
+  document.querySelectorAll('.seg [data-cols]').forEach(b=>b.addEventListener('click',()=>{const m=b.dataset.cols;setCols(m);if(canStore){try{localStorage.setItem(CKEY,m);}catch(e){}}}));
   const saveFav=()=>{if(!canStore)return;try{localStorage.setItem(FKEY,JSON.stringify([...S.fav]));}catch(e){}};
   const toggleFav=n=>{if(S.fav.has(n))S.fav.delete(n);else S.fav.add(n);saveFav();dash.draw('rows');dash.draw('ficha');};
   const starBtn=(n,big)=>{const b=mk('button',S.fav.has(n)?'★':'☆','star');b.type='button';b.setAttribute('aria-pressed',S.fav.has(n)?'true':'false');b.setAttribute('aria-label',(S.fav.has(n)?'Tirar ':'Marcar ')+n+(S.fav.has(n)?' dos favoritos':' como favorito'));b.addEventListener('click',ev=>{ev.stopPropagation();toggleFav(n);});return b;};
