@@ -365,7 +365,7 @@ window.__DATA={"players":[{"nome":"Bruno Santos","origem":"Sugestão","pos":"ATA
 
   // abas
   const show=id=>{document.querySelectorAll('.sc-tab').forEach(s=>{const on=s.id===id;s.hidden=!on;s.style.display=on?'flex':'none';});
-    document.querySelectorAll('#abas button').forEach(b=>b.setAttribute('aria-selected',b.dataset.tab===id?'true':'false'));dash.setLink(id);};
+    document.querySelectorAll('#abas button').forEach(b=>b.setAttribute('aria-selected',b.dataset.tab===id?'true':'false'));dash.setLink(id);setTimeout(()=>{if(window.__ver)window.__ver();},120);};
   const rolar=fy=>{const ir=n=>{const y=fy();window.scrollTo(0,y);if(Math.abs(window.scrollY-y)>4&&n<12)setTimeout(()=>ir(n+1),50);else if(n<3)setTimeout(()=>ir(n+1),80);};setTimeout(()=>ir(0),0);};window.__rolar=rolar;
   const NOMES={'t-geral':'Visão geral','t-comp':'Comparar','t-perfis':'Perfis','t-metodo':'Método e fontes'};
   const abaAtual=()=>{const b=document.querySelector('#abas button[aria-selected="true"]');return b?b.dataset.tab:'t-geral';};
@@ -438,8 +438,8 @@ window.__DATA={"players":[{"nome":"Bruno Santos","origem":"Sugestão","pos":"ATA
   document.querySelectorAll('#fvoltar').forEach(b=>b.addEventListener('click',()=>{const k=S.back;if(!k)return;S.back=null;btnVoltar();show(k.tab);window.__rolar(()=>k.y);}));
   const topo=document.getElementById('subir');
   if(topo){const liso=!matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const ver=()=>topo.classList.toggle('on',window.scrollY>500);
-    window.addEventListener('scroll',ver,{passive:true});ver();
+    const ver=()=>{const ab=document.getElementById('abas');topo.classList.toggle('on',ab?ab.getBoundingClientRect().bottom<0:window.scrollY>200);};window.__ver=ver;
+    window.addEventListener('scroll',ver,{passive:true});window.addEventListener('resize',ver);ver();
     topo.addEventListener('click',()=>window.scrollTo({top:0,behavior:liso?'smooth':'auto'}));}
   document.querySelectorAll('#fnext').forEach(b=>b.addEventListener('click',()=>fStep(1)));
   dash.draw('fcount',el=>{const L=fList();if(!L.length){el.textContent='—';return;}const i=L.findIndex(p=>p.nome===S.sel);const PL={GOL:'goleiros',ZAG:'zagueiros',LAT:'laterais',VOL:'volantes',MEI:'meias',PON:'pontas',ATA:'atacantes'};el.textContent=i<0?L.length+' jogadores':(i+1)+'º de '+L.length+' '+(S.fpos?PL[S.fpos]:'jogadores')+' pela nota';});
